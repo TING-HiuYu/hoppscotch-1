@@ -84,6 +84,170 @@ describe("pm.environment additional coverage", () => {
       }),
     ])
   })
+
+  test("pm.environment.toObject returns all environment variables set via pm.environment.set", () => {
+    return expect(
+      func(
+        `
+          pm.environment.set("key1", "value1")
+          pm.environment.set("key2", "value2")
+          pm.environment.set("key3", "value3")
+          
+          const envObj = pm.environment.toObject()
+          
+          pw.expect(envObj.key1).toBe("value1")
+          pw.expect(envObj.key2).toBe("value2")
+          pw.expect(envObj.key3).toBe("value3")
+          pw.expect(Object.keys(envObj).length.toString()).toBe("3")
+        `,
+        {
+          global: [],
+          selected: [],
+        }
+      )()
+    ).resolves.toEqualRight([
+      expect.objectContaining({
+        expectResults: [
+          {
+            status: "pass",
+            message: "Expected 'value1' to be 'value1'",
+          },
+          {
+            status: "pass",
+            message: "Expected 'value2' to be 'value2'",
+          },
+          {
+            status: "pass",
+            message: "Expected 'value3' to be 'value3'",
+          },
+          {
+            status: "pass",
+            message: "Expected '3' to be '3'",
+          },
+        ],
+      }),
+    ])
+  })
+
+  test("pm.environment.toObject returns empty object when no variables are set", () => {
+    return expect(
+      func(
+        `
+          const envObj = pm.environment.toObject()
+          pw.expect(Object.keys(envObj).length.toString()).toBe("0")
+        `,
+        {
+          global: [],
+          selected: [],
+        }
+      )()
+    ).resolves.toEqualRight([
+      expect.objectContaining({
+        expectResults: [
+          {
+            status: "pass",
+            message: "Expected '0' to be '0'",
+          },
+        ],
+      }),
+    ])
+  })
+
+  test("pm.environment.clear removes all environment variables set via pm.environment.set", () => {
+    return expect(
+      func(
+        `
+          pm.environment.set("key1", "value1")
+          pm.environment.set("key2", "value2")
+          
+          // Verify variables are set
+          pw.expect(pm.environment.get("key1")).toBe("value1")
+          pw.expect(pm.environment.get("key2")).toBe("value2")
+          
+          // Clear all
+          pm.environment.clear()
+          
+          // Verify variables are cleared
+          pw.expect(pm.environment.get("key1")).toBe(undefined)
+          pw.expect(pm.environment.get("key2")).toBe(undefined)
+          
+          // Verify toObject returns empty
+          const envObj = pm.environment.toObject()
+          pw.expect(Object.keys(envObj).length.toString()).toBe("0")
+        `,
+        {
+          global: [],
+          selected: [],
+        }
+      )()
+    ).resolves.toEqualRight([
+      expect.objectContaining({
+        expectResults: [
+          {
+            status: "pass",
+            message: "Expected 'value1' to be 'value1'",
+          },
+          {
+            status: "pass",
+            message: "Expected 'value2' to be 'value2'",
+          },
+          {
+            status: "pass",
+            message: "Expected 'undefined' to be 'undefined'",
+          },
+          {
+            status: "pass",
+            message: "Expected 'undefined' to be 'undefined'",
+          },
+          {
+            status: "pass",
+            message: "Expected '0' to be '0'",
+          },
+        ],
+      }),
+    ])
+  })
+
+  test("pm.environment.unset removes key from tracking", () => {
+    return expect(
+      func(
+        `
+          pm.environment.set("key1", "value1")
+          pm.environment.set("key2", "value2")
+          
+          // Unset one key
+          pm.environment.unset("key1")
+          
+          // Verify key1 is removed but key2 remains
+          const envObj = pm.environment.toObject()
+          pw.expect(envObj.key1).toBe(undefined)
+          pw.expect(envObj.key2).toBe("value2")
+          pw.expect(Object.keys(envObj).length.toString()).toBe("1")
+        `,
+        {
+          global: [],
+          selected: [],
+        }
+      )()
+    ).resolves.toEqualRight([
+      expect.objectContaining({
+        expectResults: [
+          {
+            status: "pass",
+            message: "Expected 'undefined' to be 'undefined'",
+          },
+          {
+            status: "pass",
+            message: "Expected 'value2' to be 'value2'",
+          },
+          {
+            status: "pass",
+            message: "Expected '1' to be '1'",
+          },
+        ],
+      }),
+    ])
+  })
 })
 
 describe("pm.globals additional coverage", () => {
@@ -106,6 +270,249 @@ describe("pm.globals additional coverage", () => {
           {
             status: "pass",
             message: "Expected 'global_value' to be 'global_value'",
+          },
+        ],
+      }),
+    ])
+  })
+
+  test("pm.globals.toObject returns all global variables set via pm.globals.set", () => {
+    return expect(
+      func(
+        `
+          pm.globals.set("globalKey1", "globalValue1")
+          pm.globals.set("globalKey2", "globalValue2")
+          pm.globals.set("globalKey3", "globalValue3")
+          
+          const globalObj = pm.globals.toObject()
+          
+          pw.expect(globalObj.globalKey1).toBe("globalValue1")
+          pw.expect(globalObj.globalKey2).toBe("globalValue2")
+          pw.expect(globalObj.globalKey3).toBe("globalValue3")
+          pw.expect(Object.keys(globalObj).length.toString()).toBe("3")
+        `,
+        {
+          global: [],
+          selected: [],
+        }
+      )()
+    ).resolves.toEqualRight([
+      expect.objectContaining({
+        expectResults: [
+          {
+            status: "pass",
+            message: "Expected 'globalValue1' to be 'globalValue1'",
+          },
+          {
+            status: "pass",
+            message: "Expected 'globalValue2' to be 'globalValue2'",
+          },
+          {
+            status: "pass",
+            message: "Expected 'globalValue3' to be 'globalValue3'",
+          },
+          {
+            status: "pass",
+            message: "Expected '3' to be '3'",
+          },
+        ],
+      }),
+    ])
+  })
+
+  test("pm.globals.toObject returns empty object when no globals are set", () => {
+    return expect(
+      func(
+        `
+          const globalObj = pm.globals.toObject()
+          pw.expect(Object.keys(globalObj).length.toString()).toBe("0")
+        `,
+        {
+          global: [],
+          selected: [],
+        }
+      )()
+    ).resolves.toEqualRight([
+      expect.objectContaining({
+        expectResults: [
+          {
+            status: "pass",
+            message: "Expected '0' to be '0'",
+          },
+        ],
+      }),
+    ])
+  })
+
+  test("pm.globals.clear removes all global variables set via pm.globals.set", () => {
+    return expect(
+      func(
+        `
+          pm.globals.set("globalKey1", "globalValue1")
+          pm.globals.set("globalKey2", "globalValue2")
+          
+          // Verify variables are set
+          pw.expect(pm.globals.get("globalKey1")).toBe("globalValue1")
+          pw.expect(pm.globals.get("globalKey2")).toBe("globalValue2")
+          
+          // Clear all
+          pm.globals.clear()
+          
+          // Verify variables are cleared
+          pw.expect(pm.globals.get("globalKey1")).toBe(undefined)
+          pw.expect(pm.globals.get("globalKey2")).toBe(undefined)
+          
+          // Verify toObject returns empty
+          const globalObj = pm.globals.toObject()
+          pw.expect(Object.keys(globalObj).length.toString()).toBe("0")
+        `,
+        {
+          global: [],
+          selected: [],
+        }
+      )()
+    ).resolves.toEqualRight([
+      expect.objectContaining({
+        expectResults: [
+          {
+            status: "pass",
+            message: "Expected 'globalValue1' to be 'globalValue1'",
+          },
+          {
+            status: "pass",
+            message: "Expected 'globalValue2' to be 'globalValue2'",
+          },
+          {
+            status: "pass",
+            message: "Expected 'undefined' to be 'undefined'",
+          },
+          {
+            status: "pass",
+            message: "Expected 'undefined' to be 'undefined'",
+          },
+          {
+            status: "pass",
+            message: "Expected '0' to be '0'",
+          },
+        ],
+      }),
+    ])
+  })
+
+  test("pm.globals.clear also removes initial global variables from environment", () => {
+    return expect(
+      func(
+        `
+          // Verify initial globals exist
+          pw.expect(pm.globals.get("initial_global1")).toBe("initial_value1")
+          pw.expect(pm.globals.get("initial_global2")).toBe("initial_value2")
+
+          // Add tracked globals
+          pm.globals.set("tracked_global", "tracked_value")
+          pw.expect(pm.globals.get("tracked_global")).toBe("tracked_value")
+
+          // Verify toObject includes both initial and tracked
+          const before = pm.globals.toObject()
+          pw.expect(before.initial_global1).toBe("initial_value1")
+          pw.expect(before.tracked_global).toBe("tracked_value")
+
+          // Clear all (both initial and tracked)
+          pm.globals.clear()
+
+          // Verify ALL globals are cleared
+          pw.expect(pm.globals.get("initial_global1")).toBe(undefined)
+          pw.expect(pm.globals.get("initial_global2")).toBe(undefined)
+          pw.expect(pm.globals.get("tracked_global")).toBe(undefined)
+
+          // Verify toObject returns empty
+          const after = pm.globals.toObject()
+          pw.expect(Object.keys(after).length.toString()).toBe("0")
+        `,
+        {
+          global: [
+            {
+              key: "initial_global1",
+              currentValue: "initial_value1",
+              initialValue: "initial_value1",
+              secret: false,
+            },
+            {
+              key: "initial_global2",
+              currentValue: "initial_value2",
+              initialValue: "initial_value2",
+              secret: false,
+            },
+          ],
+          selected: [],
+        }
+      )()
+    ).resolves.toEqualRight([
+      expect.objectContaining({
+        expectResults: [
+          {
+            status: "pass",
+            message: "Expected 'initial_value1' to be 'initial_value1'",
+          },
+          {
+            status: "pass",
+            message: "Expected 'initial_value2' to be 'initial_value2'",
+          },
+          {
+            status: "pass",
+            message: "Expected 'tracked_value' to be 'tracked_value'",
+          },
+          {
+            status: "pass",
+            message: "Expected 'initial_value1' to be 'initial_value1'",
+          },
+          {
+            status: "pass",
+            message: "Expected 'tracked_value' to be 'tracked_value'",
+          },
+          { status: "pass", message: "Expected 'undefined' to be 'undefined'" },
+          { status: "pass", message: "Expected 'undefined' to be 'undefined'" },
+          { status: "pass", message: "Expected 'undefined' to be 'undefined'" },
+          { status: "pass", message: "Expected '0' to be '0'" },
+        ],
+      }),
+    ])
+  })
+
+  test("pm.globals.unset removes key from tracking", () => {
+    return expect(
+      func(
+        `
+          pm.globals.set("globalKey1", "globalValue1")
+          pm.globals.set("globalKey2", "globalValue2")
+          
+          // Unset one key
+          pm.globals.unset("globalKey1")
+          
+          // Verify key1 is removed but key2 remains
+          const globalObj = pm.globals.toObject()
+          pw.expect(globalObj.globalKey1).toBe(undefined)
+          pw.expect(globalObj.globalKey2).toBe("globalValue2")
+          pw.expect(Object.keys(globalObj).length.toString()).toBe("1")
+        `,
+        {
+          global: [],
+          selected: [],
+        }
+      )()
+    ).resolves.toEqualRight([
+      expect.objectContaining({
+        expectResults: [
+          {
+            status: "pass",
+            message: "Expected 'undefined' to be 'undefined'",
+          },
+          {
+            status: "pass",
+            message: "Expected 'globalValue2' to be 'globalValue2'",
+          },
+          {
+            status: "pass",
+            message: "Expected '1' to be '1'",
           },
         ],
       }),

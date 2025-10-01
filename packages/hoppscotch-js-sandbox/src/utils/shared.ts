@@ -824,30 +824,42 @@ export const getTestRunnerScriptMethods = (envs: TestResult["envs"]) => {
  * Compiles shared scripting API properties (scoped to requests) for use in both pre and post request scripts
  * Extracts shared properties from a request object
  * @param request The request object to extract shared properties from
+ * @param getUpdatedRequest Optional function to get the updated request (for pre-request mutations)
  * @returns An object containing the shared properties of the request
  */
-export const getSharedRequestProps = (request: HoppRESTRequest) => {
+export const getSharedRequestProps = (
+  request: HoppRESTRequest,
+  getUpdatedRequest?: () => HoppRESTRequest
+) => {
   return {
     get url() {
-      return request.endpoint
+      // For pre-request scripts, read from updated request to see mutations
+      const currentRequest = getUpdatedRequest ? getUpdatedRequest() : request
+      return currentRequest.endpoint
     },
     get method() {
-      return request.method
+      const currentRequest = getUpdatedRequest ? getUpdatedRequest() : request
+      return currentRequest.method
     },
     get params() {
-      return request.params
+      const currentRequest = getUpdatedRequest ? getUpdatedRequest() : request
+      return currentRequest.params
     },
     get headers() {
-      return request.headers
+      const currentRequest = getUpdatedRequest ? getUpdatedRequest() : request
+      return currentRequest.headers
     },
     get body() {
-      return request.body
+      const currentRequest = getUpdatedRequest ? getUpdatedRequest() : request
+      return currentRequest.body
     },
     get auth() {
-      return request.auth
+      const currentRequest = getUpdatedRequest ? getUpdatedRequest() : request
+      return currentRequest.auth
     },
     get requestVariables() {
-      return request.requestVariables
+      const currentRequest = getUpdatedRequest ? getUpdatedRequest() : request
+      return currentRequest.requestVariables
     },
   }
 }

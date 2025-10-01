@@ -143,7 +143,7 @@ describe("hopp.request", () => {
     )
   })
 
-  test("hopp.request.setMethod should update and uppercase the method", () => {
+  test("hopp.request.setMethod should update the method (case preserved)", () => {
     return expect(
       runPreRequestScript(`hopp.request.setMethod("post")`, {
         envs: { global: [], selected: [] },
@@ -152,7 +152,7 @@ describe("hopp.request", () => {
     ).resolves.toEqualRight(
       expect.objectContaining({
         updatedRequest: expect.objectContaining({
-          method: "POST",
+          method: "post",
         }),
       })
     )

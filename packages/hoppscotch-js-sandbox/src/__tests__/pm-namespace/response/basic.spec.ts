@@ -16,12 +16,16 @@ const fakeResponse: TestResponse = {
   ],
 }
 
-const func = (script: string, envs: TestResult["envs"]) =>
+const func = (
+  script: string,
+  envs: TestResult["envs"],
+  response: TestResponse = fakeResponse
+) =>
   pipe(
     runTestScript(script, {
       envs,
       request: defaultRequest,
-      response: fakeResponse,
+      response,
     }),
     TE.map((x) => x.tests)
   )
@@ -131,7 +135,8 @@ describe("pm.response", () => {
           const headers = pm.response.headers
           pw.expect(headers.get("Content-Type")).toBe("application/json")
           pw.expect(headers.get("Authorization")).toBe("Bearer token123")
-          pw.expect(headers.get("nonexistent")).toBe(null)
+          // Postman returns undefined for non-existent headers, not null
+          pw.expect(headers.get("nonexistent")).toBe(undefined)
         `,
         {
           global: [],
@@ -151,7 +156,7 @@ describe("pm.response", () => {
           },
           {
             status: "pass",
-            message: "Expected 'null' to be 'null'",
+            message: "Expected 'undefined' to be 'undefined'",
           },
         ],
       }),
@@ -191,6 +196,174 @@ describe("pm.response", () => {
           {
             status: "pass",
             message: "Expected 'Hello, World!' to be 'Hello, World!'",
+          },
+        ],
+      }),
+    ])
+  })
+
+  test("pm.response.stream provides response body as Uint8Array", () => {
+    return expect(
+      func(
+        `
+          const stream = pm.response.stream
+          // Verify it's a Uint8Array by checking it can be decoded
+          const decoder = new TextDecoder()
+          const decoded = decoder.decode(stream)
+          pw.expect(decoded).toBe('{"message":"Hello, World!"}')
+        `,
+        {
+          global: [],
+          selected: [],
+        }
+      )()
+    ).resolves.toEqualRight([
+      expect.objectContaining({
+        expectResults: [
+          {
+            status: "pass",
+            message:
+              'Expected \'{"message":"Hello, World!"}\' to be \'{"message":"Hello, World!"}\'',
+          },
+        ],
+      }),
+    ])
+  })
+
+  test("pm.response.stream contains correct byte data", () => {
+    return expect(
+      func(
+        `
+          const stream = pm.response.stream
+          const decoder = new TextDecoder()
+          const text = decoder.decode(stream)
+          pw.expect(text).toBe('{"message":"Hello, World!"}')
+        `,
+        {
+          global: [],
+          selected: [],
+        }
+      )()
+    ).resolves.toEqualRight([
+      expect.objectContaining({
+        expectResults: [
+          {
+            status: "pass",
+            message:
+              'Expected \'{"message":"Hello, World!"}\' to be \'{"message":"Hello, World!"}\'',
+          },
+        ],
+      }),
+    ])
+  })
+
+  test("pm.response.reason() returns HTTP reason phrase", () => {
+    return expect(
+      func(
+        `
+          const reason = pm.response.reason()
+          pw.expect(reason).toBe("OK")
+        `,
+        {
+          global: [],
+          selected: [],
+        }
+      )()
+    ).resolves.toEqualRight([
+      expect.objectContaining({
+        expectResults: [
+          {
+            status: "pass",
+            message: "Expected 'OK' to be 'OK'",
+          },
+        ],
+      }),
+    ])
+  })
+
+  test("pm.response.dataURI() converts response to data URI", () => {
+    return expect(
+      func(
+        `
+          const dataURI = pm.response.dataURI()
+          pw.expect(dataURI).toBeType("string")
+          // Check it starts with data: and contains base64
+          const startsWithData = dataURI.startsWith("data:")
+          pw.expect(startsWithData).toBe(true)
+        `,
+        {
+          global: [],
+          selected: [],
+        }
+      )()
+    ).resolves.toEqualRight([
+      expect.objectContaining({
+        expectResults: [
+          {
+            status: "pass",
+            message: expect.stringContaining("to be type 'string'"),
+          },
+          {
+            status: "pass",
+            message: "Expected 'true' to be 'true'",
+          },
+        ],
+      }),
+    ])
+  })
+
+  test("pm.response.jsonp() parses JSONP response", () => {
+    const jsonpResponse: TestResponse = {
+      status: 200,
+      statusText: "OK",
+      body: 'callback({"data": "test value"})',
+      headers: [{ key: "Content-Type", value: "application/javascript" }],
+    }
+
+    return expect(
+      func(
+        `
+          const data = pm.response.jsonp("callback")
+          pw.expect(data.data).toBe("test value")
+        `,
+        { global: [], selected: [] },
+        jsonpResponse
+      )()
+    ).resolves.toEqualRight([
+      expect.objectContaining({
+        expectResults: [
+          {
+            status: "pass",
+            message: "Expected 'test value' to be 'test value'",
+          },
+        ],
+      }),
+    ])
+  })
+
+  test("pm.response.jsonp() handles response without callback wrapper", () => {
+    const jsonResponse: TestResponse = {
+      status: 200,
+      statusText: "OK",
+      body: '{"plain": "json"}',
+      headers: [{ key: "Content-Type", value: "application/json" }],
+    }
+
+    return expect(
+      func(
+        `
+          const data = pm.response.jsonp()
+          pw.expect(data.plain).toBe("json")
+        `,
+        { global: [], selected: [] },
+        jsonResponse
+      )()
+    ).resolves.toEqualRight([
+      expect.objectContaining({
+        expectResults: [
+          {
+            status: "pass",
+            message: "Expected 'json' to be 'json'",
           },
         ],
       }),

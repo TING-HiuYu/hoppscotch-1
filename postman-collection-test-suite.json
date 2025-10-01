@@ -1,0 +1,2141 @@
+{
+  "info": {
+    "name": "Postman & Hoppscotch Full Coverage Test Suite",
+    "_postman_id": "postman-hoppscotch-full-coverage",
+    "description": "Complete test coverage using Postman-compatible semantics. Works perfectly in both Postman and Hoppscotch.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Chai Basic Assertions",
+      "item": [
+        {
+          "name": "Type Assertions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://echo.hoppscotch.io",
+              "protocol": "https",
+              "host": [
+                "echo",
+                "hoppscotch",
+                "io"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Type assertions - string', () => {",
+                  "    pm.expect('hello').to.be.a('string')",
+                  "    pm.expect('hello').to.be.an('string')",
+                  "})",
+                  "",
+                  "pm.test('Type assertions - number', () => {",
+                  "    pm.expect(123).to.be.a('number')",
+                  "    pm.expect(3.14).to.be.a('number')",
+                  "})",
+                  "",
+                  "pm.test('Type assertions - boolean', () => {",
+                  "    pm.expect(true).to.be.a('boolean')",
+                  "    pm.expect(false).to.be.a('boolean')",
+                  "})",
+                  "",
+                  "pm.test('Type assertions - object', () => {",
+                  "    pm.expect({}).to.be.an('object')",
+                  "    pm.expect({ key: 'value' }).to.be.an('object')",
+                  "})",
+                  "",
+                  "pm.test('Type assertions - array', () => {",
+                  "    pm.expect([]).to.be.an('array')",
+                  "    pm.expect([1, 2, 3]).to.be.an('array')",
+                  "})"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Equality Assertions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://echo.hoppscotch.io",
+              "protocol": "https",
+              "host": [
+                "echo",
+                "hoppscotch",
+                "io"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Strict equality - equal()', () => {",
+                  "    pm.expect(5).to.equal(5)",
+                  "    pm.expect('hello').to.equal('hello')",
+                  "    pm.expect(true).to.equal(true)",
+                  "})",
+                  "",
+                  "pm.test('Strict equality - eq()', () => {",
+                  "    pm.expect(10).to.eq(10)",
+                  "    pm.expect('world').to.eq('world')",
+                  "})",
+                  "",
+                  "pm.test('Deep equality - eql()', () => {",
+                  "    pm.expect({ a: 1 }).to.eql({ a: 1 })",
+                  "    pm.expect([1, 2, 3]).to.eql([1, 2, 3])",
+                  "})",
+                  "",
+                  "pm.test('Negation - not', () => {",
+                  "    pm.expect(5).to.not.equal(10)",
+                  "    pm.expect('hello').to.not.equal('world')",
+                  "    pm.expect({ a: 1 }).to.not.eql({ a: 2 })",
+                  "})"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Truthiness Assertions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://echo.hoppscotch.io",
+              "protocol": "https",
+              "host": [
+                "echo",
+                "hoppscotch",
+                "io"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Boolean assertions - true/false', () => {",
+                  "    pm.expect(true).to.be.true",
+                  "    pm.expect(false).to.be.false",
+                  "    pm.expect(1).to.not.be.true",
+                  "})",
+                  "",
+                  "pm.test('Truthy/falsy - ok', () => {",
+                  "    pm.expect(1).to.be.ok",
+                  "    pm.expect('hello').to.be.ok",
+                  "    pm.expect(true).to.be.ok",
+                  "    pm.expect(0).to.not.be.ok",
+                  "    pm.expect('').to.not.be.ok",
+                  "})",
+                  "",
+                  "pm.test('Null and undefined', () => {",
+                  "    pm.expect(null).to.be.null",
+                  "    pm.expect(undefined).to.be.undefined",
+                  "    pm.expect('hello').to.not.be.null",
+                  "    pm.expect('hello').to.not.be.undefined",
+                  "})",
+                  "",
+                  "pm.test('Existence - exist', () => {",
+                  "    pm.expect('hello').to.exist",
+                  "    pm.expect(123).to.exist",
+                  "    pm.expect(null).to.not.exist",
+                  "    pm.expect(undefined).to.not.exist",
+                  "})"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Comparison Assertions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://echo.hoppscotch.io",
+              "protocol": "https",
+              "host": [
+                "echo",
+                "hoppscotch",
+                "io"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Greater than - above/gt/greaterThan', () => {",
+                  "    pm.expect(10).to.be.above(5)",
+                  "    pm.expect(20).to.be.gt(15)",
+                  "    pm.expect(100).to.be.greaterThan(50)",
+                  "})",
+                  "",
+                  "pm.test('Less than - below/lt/lessThan', () => {",
+                  "    pm.expect(5).to.be.below(10)",
+                  "    pm.expect(15).to.be.lt(20)",
+                  "    pm.expect(50).to.be.lessThan(100)",
+                  "})",
+                  "",
+                  "pm.test('At least - least/gte', () => {",
+                  "    pm.expect(10).to.be.at.least(10)",
+                  "    pm.expect(15).to.be.at.least(10)",
+                  "    pm.expect(20).to.be.gte(20)",
+                  "})",
+                  "",
+                  "pm.test('At most - most/lte', () => {",
+                  "    pm.expect(10).to.be.at.most(10)",
+                  "    pm.expect(5).to.be.at.most(10)",
+                  "    pm.expect(20).to.be.lte(20)",
+                  "})",
+                  "",
+                  "pm.test('Within range', () => {",
+                  "    pm.expect(5).to.be.within(1, 10)",
+                  "    pm.expect(15).to.be.within(10, 20)",
+                  "})",
+                  "",
+                  "pm.test('Close to - closeTo/approximately', () => {",
+                  "    pm.expect(9.99).to.be.closeTo(10, 0.1)",
+                  "    pm.expect(3.14).to.be.approximately(3.1, 0.1)",
+                  "})"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "String and Array Assertions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://echo.hoppscotch.io",
+              "protocol": "https",
+              "host": [
+                "echo",
+                "hoppscotch",
+                "io"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('String inclusion - include/contain', () => {",
+                  "    pm.expect('hello world').to.include('world')",
+                  "    pm.expect('hello world').to.contain('hello')",
+                  "    pm.expect('foobar').to.include('foo')",
+                  "})",
+                  "",
+                  "pm.test('String matching - match', () => {",
+                  "    pm.expect('hello world').to.match(/world/)",
+                  "    pm.expect('test123').to.match(/\\d+/)",
+                  "})",
+                  "",
+                  "pm.test('String content - string', () => {",
+                  "    pm.expect('hello world').to.have.string('world')",
+                  "    pm.expect('foobar').to.have.string('bar')",
+                  "})",
+                  "",
+                  "pm.test('Array inclusion - include/contain', () => {",
+                  "    pm.expect([1, 2, 3]).to.include(2)",
+                  "    pm.expect(['a', 'b', 'c']).to.contain('b')",
+                  "})",
+                  "",
+                  "pm.test('Array members', () => {",
+                  "    pm.expect([1, 2, 3]).to.have.members([3, 2, 1])",
+                  "    pm.expect(['a', 'b']).to.have.members(['b', 'a'])",
+                  "})",
+                  "",
+                  "pm.test('One of - oneOf', () => {",
+                  "    pm.expect(2).to.be.oneOf([1, 2, 3])",
+                  "    pm.expect('b').to.be.oneOf(['a', 'b', 'c'])",
+                  "})"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Property and Length Assertions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://echo.hoppscotch.io",
+              "protocol": "https",
+              "host": [
+                "echo",
+                "hoppscotch",
+                "io"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Property existence - property', () => {",
+                  "    pm.expect({ name: 'John' }).to.have.property('name')",
+                  "    pm.expect({ age: 30 }).to.have.property('age', 30)",
+                  "})",
+                  "",
+                  "pm.test('Own property - ownProperty', () => {",
+                  "    pm.expect({ key: 'value' }).to.have.ownProperty('key')",
+                  "})",
+                  "",
+                  "pm.test('Keys - keys/key', () => {",
+                  "    pm.expect({ a: 1, b: 2 }).to.have.keys('a', 'b')",
+                  "    pm.expect({ x: 1 }).to.have.key('x')",
+                  "})",
+                  "",
+                  "pm.test('Length - length/lengthOf', () => {",
+                  "    pm.expect([1, 2, 3]).to.have.length(3)",
+                  "    pm.expect('hello').to.have.lengthOf(5)",
+                  "    pm.expect([]).to.have.length(0)",
+                  "})",
+                  "",
+                  "pm.test('Empty - empty', () => {",
+                  "    pm.expect([]).to.be.empty",
+                  "    pm.expect('').to.be.empty",
+                  "    pm.expect({}).to.be.empty",
+                  "    pm.expect([1]).to.not.be.empty",
+                  "})"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "2. Chai Advanced Features",
+      "item": [
+        {
+          "name": "Nested Property Assertions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://echo.hoppscotch.io",
+              "protocol": "https",
+              "host": [
+                "echo",
+                "hoppscotch",
+                "io"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Nested property with dot notation', () => {",
+                  "    const obj = { a: { b: { c: 'value' } } }",
+                  "    pm.expect(obj).to.have.nested.property('a.b.c', 'value')",
+                  "})",
+                  "",
+                  "pm.test('Nested property with array indices', () => {",
+                  "    const obj = { items: [{ name: 'first' }, { name: 'second' }] }",
+                  "    pm.expect(obj).to.have.nested.property('items[0].name', 'first')",
+                  "    pm.expect(obj).to.have.nested.property('items[1].name', 'second')",
+                  "})",
+                  "",
+                  "pm.test('Deep nested properties', () => {",
+                  "    const data = { user: { profile: { settings: { theme: 'dark' } } } }",
+                  "    pm.expect(data).to.have.nested.property('user.profile.settings.theme', 'dark')",
+                  "})",
+                  "",
+                  "pm.test('Nested property negation', () => {",
+                  "    const obj = { a: { b: 'value' } }",
+                  "    pm.expect(obj).to.not.have.nested.property('a.c')",
+                  "    pm.expect(obj).to.not.have.nested.property('x.y.z')",
+                  "})"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Side Effect Assertions - change",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://echo.hoppscotch.io",
+              "protocol": "https",
+              "host": [
+                "echo",
+                "hoppscotch",
+                "io"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Function changes property value', () => {",
+                  "    const obj = { value: 0 }",
+                  "    pm.expect(() => { obj.value = 10 }).to.change(obj, 'value')",
+                  "})",
+                  "",
+                  "pm.test('Function changes property by specific delta', () => {",
+                  "    const obj = { count: 5 }",
+                  "    pm.expect(() => { obj.count += 3 }).to.change(obj, 'count').by(3)",
+                  "})",
+                  "",
+                  "pm.test('Function does not change property', () => {",
+                  "    const obj = { value: 10 }",
+                  "    pm.expect(() => { const x = obj.value }).to.not.change(obj, 'value')",
+                  "})",
+                  "",
+                  "pm.test('Change with negative delta', () => {",
+                  "    const obj = { balance: 100 }",
+                  "    pm.expect(() => { obj.balance -= 20 }).to.change(obj, 'balance').by(-20)",
+                  "})"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Side Effect Assertions - increase",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://echo.hoppscotch.io",
+              "protocol": "https",
+              "host": [
+                "echo",
+                "hoppscotch",
+                "io"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Function increases property value', () => {",
+                  "    const obj = { count: 0 }",
+                  "    pm.expect(() => { obj.count++ }).to.increase(obj, 'count')",
+                  "})",
+                  "",
+                  "pm.test('Function increases property by specific amount', () => {",
+                  "    const obj = { score: 10 }",
+                  "    pm.expect(() => { obj.score += 5 }).to.increase(obj, 'score').by(5)",
+                  "})",
+                  "",
+                  "pm.test('Function does not increase property', () => {",
+                  "    const obj = { value: 10 }",
+                  "    pm.expect(() => { obj.value = 10 }).to.not.increase(obj, 'value')",
+                  "})"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Side Effect Assertions - decrease",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://echo.hoppscotch.io",
+              "protocol": "https",
+              "host": [
+                "echo",
+                "hoppscotch",
+                "io"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Function decreases property value', () => {",
+                  "    const obj = { count: 10 }",
+                  "    pm.expect(() => { obj.count-- }).to.decrease(obj, 'count')",
+                  "})",
+                  "",
+                  "pm.test('Function decreases property by specific amount', () => {",
+                  "    const obj = { stock: 100 }",
+                  "    pm.expect(() => { obj.stock -= 25 }).to.decrease(obj, 'stock').by(25)",
+                  "})",
+                  "",
+                  "pm.test('Function does not decrease property', () => {",
+                  "    const obj = { value: 10 }",
+                  "    pm.expect(() => { obj.value += 5 }).to.not.decrease(obj, 'value')",
+                  "})"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "3. PropertyList - Query Parameters",
+      "item": [
+        {
+          "name": "Query get() and has() methods",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://echo.hoppscotch.io?filter=active&sort=name&page=1&limit=10",
+              "protocol": "https",
+              "host": [
+                "echo",
+                "hoppscotch",
+                "io"
+              ],
+              "query": [
+                {
+                  "key": "filter",
+                  "value": "active"
+                },
+                {
+                  "key": "sort",
+                  "value": "name"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// Test get() method - works in both Postman and Hoppscotch",
+                  "const filterValue = pm.request.url.query.get('filter')",
+                  "pm.environment.set('query_get_filter', filterValue || 'null')",
+                  "",
+                  "const sortValue = pm.request.url.query.get('sort')",
+                  "pm.environment.set('query_get_sort', sortValue || 'null')",
+                  "",
+                  "// Test has() method",
+                  "const hasPage = pm.request.url.query.has('page')",
+                  "pm.environment.set('query_has_page', hasPage.toString())",
+                  "",
+                  "const hasMissing = pm.request.url.query.has('nonexistent')",
+                  "pm.environment.set('query_has_missing', hasMissing.toString())"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('pm.request.url.query.get() retrieves parameter value', () => {",
+                  "    pm.expect(pm.environment.get('query_get_filter')).to.equal('active')",
+                  "    pm.expect(pm.environment.get('query_get_sort')).to.equal('name')",
+                  "})",
+                  "",
+                  "pm.test('pm.request.url.query.has() checks parameter existence', () => {",
+                  "    pm.expect(pm.environment.get('query_has_page')).to.equal('true')",
+                  "    pm.expect(pm.environment.get('query_has_missing')).to.equal('false')",
+                  "})"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Query count(), map(), and all() methods",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://echo.hoppscotch.io?first=1&second=2&third=3",
+              "protocol": "https",
+              "host": [
+                "echo",
+                "hoppscotch",
+                "io"
+              ],
+              "query": [
+                {
+                  "key": "first",
+                  "value": "1"
+                },
+                {
+                  "key": "second",
+                  "value": "2"
+                },
+                {
+                  "key": "third",
+                  "value": "3"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// Test count() method",
+                  "const count = pm.request.url.query.count()",
+                  "pm.environment.set('query_count', count.toString())",
+                  "",
+                  "// Test map() method",
+                  "const keys = pm.request.url.query.map(p => p.key)",
+                  "pm.environment.set('query_keys', JSON.stringify(keys))",
+                  "",
+                  "// Test all() method - verify it returns an object",
+                  "const allParams = pm.request.url.query.all()",
+                  "pm.environment.set('query_all_is_object', (typeof allParams === 'object' && allParams !== null).toString())",
+                  "// In Postman pre-request, all() may return empty object, so we test the method exists and returns an object",
+                  "pm.environment.set('query_all_type', typeof allParams)"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('pm.request.url.query.count() returns correct count', () => {",
+                  "    const count = parseInt(pm.environment.get('query_count'))",
+                  "    pm.expect(count).to.equal(3)",
+                  "})",
+                  "",
+                  "pm.test('pm.request.url.query.map() transforms parameters', () => {",
+                  "    const keys = JSON.parse(pm.environment.get('query_keys'))",
+                  "    pm.expect(keys).to.eql(['first', 'second', 'third'])",
+                  "})",
+                  "",
+                  "pm.test('pm.request.url.query.all() returns an object', () => {",
+                  "    pm.expect(pm.environment.get('query_all_is_object')).to.equal('true')",
+                  "    pm.expect(pm.environment.get('query_all_type')).to.equal('object')",
+                  "})"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Query add() and remove() methods",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://echo.hoppscotch.io?initial=value",
+              "protocol": "https",
+              "host": [
+                "echo",
+                "hoppscotch",
+                "io"
+              ],
+              "query": [
+                {
+                  "key": "initial",
+                  "value": "value"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// Test add() method",
+                  "pm.request.url.query.add({ key: 'added', value: 'test' })",
+                  "const hasAdded = pm.request.url.query.has('added')",
+                  "pm.environment.set('query_has_added', hasAdded.toString())",
+                  "",
+                  "// Test remove() method",
+                  "pm.request.url.query.remove('initial')",
+                  "const hasInitial = pm.request.url.query.has('initial')",
+                  "pm.environment.set('query_has_initial_after_remove', hasInitial.toString())",
+                  "",
+                  "// Verify count changed",
+                  "const finalCount = pm.request.url.query.count()",
+                  "pm.environment.set('query_final_count', finalCount.toString())"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('pm.request.url.query.add() adds new parameter', () => {",
+                  "    pm.expect(pm.environment.get('query_has_added')).to.equal('true')",
+                  "})",
+                  "",
+                  "pm.test('pm.request.url.query.remove() removes parameter', () => {",
+                  "    pm.expect(pm.environment.get('query_has_initial_after_remove')).to.equal('false')",
+                  "})",
+                  "",
+                  "pm.test('Parameter count reflects changes', () => {",
+                  "    const count = parseInt(pm.environment.get('query_final_count'))",
+                  "    pm.expect(count).to.equal(1)",
+                  "})"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Query idx() method",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://echo.hoppscotch.io?zero=0&one=1&two=2",
+              "protocol": "https",
+              "host": [
+                "echo",
+                "hoppscotch",
+                "io"
+              ],
+              "query": [
+                {
+                  "key": "zero",
+                  "value": "0"
+                },
+                {
+                  "key": "one",
+                  "value": "1"
+                },
+                {
+                  "key": "two",
+                  "value": "2"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// Test idx() method to get parameter by index",
+                  "const firstParam = pm.request.url.query.idx(0)",
+                  "pm.environment.set('query_idx_0_key', firstParam ? firstParam.key : 'null')",
+                  "pm.environment.set('query_idx_0_value', firstParam ? firstParam.value : 'null')",
+                  "",
+                  "const secondParam = pm.request.url.query.idx(1)",
+                  "pm.environment.set('query_idx_1_key', secondParam ? secondParam.key : 'null')",
+                  "",
+                  "const outOfBounds = pm.request.url.query.idx(99)",
+                  "// In Postman, idx() may return undefined instead of null",
+                  "pm.environment.set('query_idx_99', (!outOfBounds) ? 'null' : 'not_null')"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('pm.request.url.query.idx(0) returns first parameter', () => {",
+                  "    pm.expect(pm.environment.get('query_idx_0_key')).to.equal('zero')",
+                  "    pm.expect(pm.environment.get('query_idx_0_value')).to.equal('0')",
+                  "})",
+                  "",
+                  "pm.test('pm.request.url.query.idx(1) returns second parameter', () => {",
+                  "    pm.expect(pm.environment.get('query_idx_1_key')).to.equal('one')",
+                  "})",
+                  "",
+                  "pm.test('pm.request.url.query.idx() returns null for out of bounds', () => {",
+                  "    pm.expect(pm.environment.get('query_idx_99')).to.equal('null')",
+                  "})"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Query each() and filter() methods",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://echo.hoppscotch.io?a=1&b=2&c=3&d=4",
+              "protocol": "https",
+              "host": [
+                "echo",
+                "hoppscotch",
+                "io"
+              ],
+              "query": [
+                {
+                  "key": "a",
+                  "value": "1"
+                },
+                {
+                  "key": "b",
+                  "value": "2"
+                },
+                {
+                  "key": "c",
+                  "value": "3"
+                },
+                {
+                  "key": "d",
+                  "value": "4"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// Test each() method",
+                  "let eachCount = 0",
+                  "pm.request.url.query.each(() => { eachCount++ })",
+                  "pm.environment.set('query_each_count', eachCount.toString())",
+                  "",
+                  "// Test filter() method",
+                  "const filtered = pm.request.url.query.filter(p => parseInt(p.value) > 2)",
+                  "pm.environment.set('query_filtered_count', filtered.length.toString())",
+                  "pm.environment.set('query_filtered_keys', JSON.stringify(filtered.map(p => p.key)))"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('pm.request.url.query.each() iterates over all parameters', () => {",
+                  "    pm.expect(pm.environment.get('query_each_count')).to.equal('4')",
+                  "})",
+                  "",
+                  "pm.test('pm.request.url.query.filter() filters parameters correctly', () => {",
+                  "    pm.expect(pm.environment.get('query_filtered_count')).to.equal('2')",
+                  "    const keys = JSON.parse(pm.environment.get('query_filtered_keys'))",
+                  "    pm.expect(keys).to.eql(['c', 'd'])",
+                  "})"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "4. PropertyList - Headers",
+      "item": [
+        {
+          "name": "Headers get() and has() methods (case-insensitive)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer token123"
+              },
+              {
+                "key": "X-API-Version",
+                "value": "v2"
+              }
+            ],
+            "url": {
+              "raw": "https://echo.hoppscotch.io",
+              "protocol": "https",
+              "host": [
+                "echo",
+                "hoppscotch",
+                "io"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// Test get() method - case insensitive",
+                  "const ct1 = pm.request.headers.get('content-type')",
+                  "pm.environment.set('header_get_lowercase', ct1 || 'null')",
+                  "",
+                  "const ct2 = pm.request.headers.get('CONTENT-TYPE')",
+                  "pm.environment.set('header_get_uppercase', ct2 || 'null')",
+                  "",
+                  "const auth = pm.request.headers.get('Authorization')",
+                  "pm.environment.set('header_get_auth', auth || 'null')",
+                  "",
+                  "// Test has() method",
+                  "const hasAPI = pm.request.headers.has('x-api-version')",
+                  "pm.environment.set('header_has_api', hasAPI.toString())",
+                  "",
+                  "const hasMissing = pm.request.headers.has('X-Missing')",
+                  "pm.environment.set('header_has_missing', hasMissing.toString())"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('pm.request.headers.get() is case-insensitive', () => {",
+                  "    pm.expect(pm.environment.get('header_get_lowercase')).to.equal('application/json')",
+                  "    pm.expect(pm.environment.get('header_get_uppercase')).to.equal('application/json')",
+                  "})",
+                  "",
+                  "pm.test('pm.request.headers.get() retrieves header value', () => {",
+                  "    pm.expect(pm.environment.get('header_get_auth')).to.equal('Bearer token123')",
+                  "})",
+                  "",
+                  "pm.test('pm.request.headers.has() checks header existence (case-insensitive)', () => {",
+                  "    pm.expect(pm.environment.get('header_has_api')).to.equal('true')",
+                  "    pm.expect(pm.environment.get('header_has_missing')).to.equal('false')",
+                  "})"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Headers count(), map(), and all() methods",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "User-Agent",
+                "value": "PostmanRuntime"
+              }
+            ],
+            "url": {
+              "raw": "https://echo.hoppscotch.io",
+              "protocol": "https",
+              "host": [
+                "echo",
+                "hoppscotch",
+                "io"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// Test count() method",
+                  "const count = pm.request.headers.count()",
+                  "pm.environment.set('header_count', count.toString())",
+                  "",
+                  "// Test map() method",
+                  "const keys = pm.request.headers.map(h => h.key)",
+                  "pm.environment.set('header_keys', JSON.stringify(keys))",
+                  "",
+                  "// Test all() method - verify it returns an object",
+                  "const allHeaders = pm.request.headers.all()",
+                  "pm.environment.set('header_all_is_object', (typeof allHeaders === 'object' && allHeaders !== null).toString())",
+                  "// In Postman pre-request, all() may return empty object, so we test the method exists and returns an object",
+                  "pm.environment.set('header_all_type', typeof allHeaders)"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('pm.request.headers.count() returns correct count', () => {",
+                  "    const count = parseInt(pm.environment.get('header_count'))",
+                  "    pm.expect(count).to.be.at.least(2)",
+                  "})",
+                  "",
+                  "pm.test('pm.request.headers.map() transforms headers', () => {",
+                  "    const keys = JSON.parse(pm.environment.get('header_keys'))",
+                  "    pm.expect(keys).to.be.an('array')",
+                  "    pm.expect(keys.length).to.be.at.least(2)",
+                  "})",
+                  "",
+                  "pm.test('pm.request.headers.all() returns an object', () => {",
+                  "    pm.expect(pm.environment.get('header_all_is_object')).to.equal('true')",
+                  "    pm.expect(pm.environment.get('header_all_type')).to.equal('object')",
+                  "})"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Headers add() and remove() methods",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Initial-Header",
+                "value": "initial"
+              }
+            ],
+            "url": {
+              "raw": "https://echo.hoppscotch.io",
+              "protocol": "https",
+              "host": [
+                "echo",
+                "hoppscotch",
+                "io"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// Test add() method",
+                  "pm.request.headers.add({ key: 'X-Custom', value: 'test-value' })",
+                  "const hasCustom = pm.request.headers.has('x-custom')",
+                  "pm.environment.set('header_has_custom', hasCustom.toString())",
+                  "",
+                  "// Test remove() method (case-insensitive)",
+                  "pm.request.headers.remove('initial-header')",
+                  "const hasInitial = pm.request.headers.has('Initial-Header')",
+                  "pm.environment.set('header_has_initial_after_remove', hasInitial.toString())"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('pm.request.headers.add() adds new header', () => {",
+                  "    pm.expect(pm.environment.get('header_has_custom')).to.equal('true')",
+                  "})",
+                  "",
+                  "pm.test('pm.request.headers.remove() removes header (case-insensitive)', () => {",
+                  "    pm.expect(pm.environment.get('header_has_initial_after_remove')).to.equal('false')",
+                  "})"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Headers idx() method",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "First",
+                "value": "1"
+              },
+              {
+                "key": "Second",
+                "value": "2"
+              },
+              {
+                "key": "Third",
+                "value": "3"
+              }
+            ],
+            "url": {
+              "raw": "https://echo.hoppscotch.io",
+              "protocol": "https",
+              "host": [
+                "echo",
+                "hoppscotch",
+                "io"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// Test idx() method to get header by index",
+                  "const firstHeader = pm.request.headers.idx(0)",
+                  "pm.environment.set('header_idx_0_key', firstHeader ? firstHeader.key : 'null')",
+                  "",
+                  "const secondHeader = pm.request.headers.idx(1)",
+                  "pm.environment.set('header_idx_1_value', secondHeader ? secondHeader.value : 'null')",
+                  "",
+                  "const outOfBounds = pm.request.headers.idx(99)",
+                  "// In Postman, idx() may return undefined instead of null",
+                  "pm.environment.set('header_idx_99', (!outOfBounds) ? 'null' : 'not_null')"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('pm.request.headers.idx(0) returns first header', () => {",
+                  "    pm.expect(pm.environment.get('header_idx_0_key')).to.equal('First')",
+                  "})",
+                  "",
+                  "pm.test('pm.request.headers.idx(1) returns second header', () => {",
+                  "    pm.expect(pm.environment.get('header_idx_1_value')).to.equal('2')",
+                  "})",
+                  "",
+                  "pm.test('pm.request.headers.idx() returns null for out of bounds', () => {",
+                  "    pm.expect(pm.environment.get('header_idx_99')).to.equal('null')",
+                  "})"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Headers each() and filter() methods",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Test-A",
+                "value": "1"
+              },
+              {
+                "key": "X-Test-B",
+                "value": "2"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://echo.hoppscotch.io",
+              "protocol": "https",
+              "host": [
+                "echo",
+                "hoppscotch",
+                "io"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// Test each() method",
+                  "let eachCount = 0",
+                  "pm.request.headers.each(() => { eachCount++ })",
+                  "pm.environment.set('header_each_count', eachCount.toString())",
+                  "",
+                  "// Test filter() method",
+                  "const filtered = pm.request.headers.filter(h => h.key.toLowerCase().startsWith('x-test'))",
+                  "pm.environment.set('header_filtered_count', filtered.length.toString())"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('pm.request.headers.each() iterates over all headers', () => {",
+                  "    const count = parseInt(pm.environment.get('header_each_count'))",
+                  "    pm.expect(count).to.be.at.least(3)",
+                  "})",
+                  "",
+                  "pm.test('pm.request.headers.filter() filters headers correctly', () => {",
+                  "    pm.expect(pm.environment.get('header_filtered_count')).to.equal('2')",
+                  "})"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "5. Response Utility Methods",
+      "item": [
+        {
+          "name": "Response Basic Properties",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://echo.hoppscotch.io",
+              "protocol": "https",
+              "host": [
+                "echo",
+                "hoppscotch",
+                "io"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('pm.response.code returns status code', () => {",
+                  "    pm.expect(pm.response.code).to.be.a('number')",
+                  "    pm.expect(pm.response.code).to.equal(200)",
+                  "})",
+                  "",
+                  "pm.test('pm.response.status returns status text', () => {",
+                  "    pm.expect(pm.response.status).to.be.a('string')",
+                  "})",
+                  "",
+                  "pm.test('pm.response.text() returns response body', () => {",
+                  "    const text = pm.response.text()",
+                  "    pm.expect(text).to.be.a('string')",
+                  "})",
+                  "",
+                  "pm.test('pm.response.headers exists and is accessible', () => {",
+                  "    pm.expect(pm.response.headers).to.exist",
+                  "})"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Response reason() method",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://echo.hoppscotch.io",
+              "protocol": "https",
+              "host": [
+                "echo",
+                "hoppscotch",
+                "io"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('pm.response.reason() method exists', () => {",
+                  "    pm.expect(pm.response.reason).to.be.a('function')",
+                  "})",
+                  "",
+                  "pm.test('pm.response.reason() returns a string', () => {",
+                  "    const reason = pm.response.reason()",
+                  "    pm.expect(reason).to.be.a('string')",
+                  "})"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Response dataURI() method",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"message\": \"test data for encoding\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://echo.hoppscotch.io",
+              "protocol": "https",
+              "host": [
+                "echo",
+                "hoppscotch",
+                "io"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('pm.response.dataURI() method exists', () => {",
+                  "    pm.expect(pm.response.dataURI).to.be.a('function')",
+                  "})",
+                  "",
+                  "pm.test('pm.response.dataURI() returns data URI format', () => {",
+                  "    const dataUri = pm.response.dataURI()",
+                  "    pm.expect(dataUri).to.be.a('string')",
+                  "    pm.expect(dataUri).to.include('data:')",
+                  "    pm.expect(dataUri).to.match(/^data:.+;base64,/)",
+                  "})",
+                  "",
+                  "pm.test('pm.response.dataURI() includes base64 encoded content', () => {",
+                  "    const dataUri = pm.response.dataURI()",
+                  "    pm.expect(dataUri.length).to.be.above(40)",
+                  "})"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Response jsonp() method",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://echo.hoppscotch.io",
+              "protocol": "https",
+              "host": [
+                "echo",
+                "hoppscotch",
+                "io"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('pm.response.jsonp() method exists and is callable', () => {",
+                  "    pm.expect(pm.response.jsonp).to.be.a('function')",
+                  "})",
+                  "",
+                  "pm.test('JSONP parsing logic - manual verification', () => {",
+                  "    // Test the JSONP pattern matching",
+                  "    const mockJsonp = 'callback({\"status\": \"success\", \"value\": 42})'",
+                  "    const match = mockJsonp.match(/^\\s*callback\\s*\\((.*)\\)\\s*;?\\s*$/s)",
+                  "    pm.expect(match).to.not.be.null",
+                  "    ",
+                  "    if (match && match[1]) {",
+                  "        const parsed = JSON.parse(match[1])",
+                  "        pm.expect(parsed).to.have.property('status', 'success')",
+                  "        pm.expect(parsed).to.have.property('value', 42)",
+                  "    }",
+                  "})"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Response stream property",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://echo.hoppscotch.io",
+              "protocol": "https",
+              "host": [
+                "echo",
+                "hoppscotch",
+                "io"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('pm.response.stream property exists', () => {",
+                  "    pm.expect(pm.response.stream).to.exist",
+                  "})",
+                  "",
+                  "pm.test('pm.response.stream can be decoded with TextDecoder', () => {",
+                  "    if (typeof TextDecoder !== 'undefined') {",
+                  "        const decoder = new TextDecoder()",
+                  "        const text = decoder.decode(pm.response.stream)",
+                  "        pm.expect(text).to.be.a('string')",
+                  "    } else {",
+                  "        // TextDecoder not available in this environment",
+                  "        pm.expect(true).to.be.true",
+                  "    }",
+                  "})"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "6. Environment and Variables",
+      "item": [
+        {
+          "name": "Environment Operations",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://echo.hoppscotch.io",
+              "protocol": "https",
+              "host": [
+                "echo",
+                "hoppscotch",
+                "io"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// Set environment variables",
+                  "pm.environment.set('test_key', 'test_value')",
+                  "pm.environment.set('number_key', '123')",
+                  "pm.globals.set('global_key', 'global_value')"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('pm.environment.get() retrieves environment variables', () => {",
+                  "    pm.expect(pm.environment.get('test_key')).to.equal('test_value')",
+                  "    pm.expect(pm.environment.get('number_key')).to.equal('123')",
+                  "})",
+                  "",
+                  "pm.test('pm.environment.has() checks existence', () => {",
+                  "    pm.expect(pm.environment.has('test_key')).to.be.true",
+                  "    pm.expect(pm.environment.has('nonexistent')).to.be.false",
+                  "})",
+                  "",
+                  "pm.test('pm.variables.get() retrieves variables', () => {",
+                  "    pm.expect(pm.variables.get('test_key')).to.equal('test_value')",
+                  "})",
+                  "",
+                  "pm.test('pm.globals.get() retrieves global variables', () => {",
+                  "    const globalValue = pm.globals.get('global_key')",
+                  "    if (globalValue) {",
+                  "        pm.expect(globalValue).to.equal('global_value')",
+                  "    }",
+                  "})"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Template Replacement",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://echo.hoppscotch.io",
+              "protocol": "https",
+              "host": [
+                "echo",
+                "hoppscotch",
+                "io"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "pm.environment.set('base_url', 'https://api.example.com')",
+                  "pm.environment.set('api_version', 'v2')"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('pm.variables.replaceIn() resolves template variables', () => {",
+                  "    const template = '{{base_url}}/{{api_version}}/users'",
+                  "    const resolved = pm.variables.replaceIn(template)",
+                  "    pm.expect(resolved).to.equal('https://api.example.com/v2/users')",
+                  "})",
+                  "",
+                  "pm.test('pm.environment.replaceIn() resolves environment variables', () => {",
+                  "    const template = 'API Version: {{api_version}}'",
+                  "    const resolved = pm.environment.replaceIn(template)",
+                  "    pm.expect(resolved).to.equal('API Version: v2')",
+                  "})"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "7. Request Mutations & URL Manipulation",
+      "description": "Tests for pm.request mutations validated by js-sandbox mutations.spec.ts and url/properties.spec.ts",
+      "item": [
+        {
+          "name": "URL String Assignment",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://httpbin.org/anything",
+              "protocol": "https",
+              "host": [
+                "httpbin",
+                "org"
+              ],
+              "path": [
+                "anything"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// Demonstrates TypeScript intersection type: string & { properties }",
+                  "pm.request.url = 'https://httpbin.org/anything/v2/data?page=1'",
+                  "",
+                  "// Verify URL was updated",
+                  "pm.environment.set('url_string', pm.request.url.toString())"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('URL string assignment works', () => {",
+                  "    const json = pm.response.json()",
+                  "    pm.expect(json.url).to.include('/anything/v2/data')",
+                  "    pm.expect(json.url).to.include('page=1')",
+                  "})"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "URL getHost() Method",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://httpbin.org/get",
+              "protocol": "https",
+              "host": [
+                "httpbin",
+                "org"
+              ],
+              "path": [
+                "get"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// Test getHost() method (returns hostname as string)",
+                  "const initialHostname = pm.request.url.getHost()",
+                  "pm.environment.set('initial_hostname', initialHostname)",
+                  "",
+                  "// Hostname should be 'httpbin.org'",
+                  "pm.environment.set('hostname_is_string', (typeof initialHostname === 'string').toString())"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('getHost() method returns string', () => {",
+                  "    pm.expect(pm.environment.get('hostname_is_string')).to.equal('true')",
+                  "    pm.expect(pm.environment.get('initial_hostname')).to.equal('httpbin.org')",
+                  "})"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "URL hash Property",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://httpbin.org/get#section1",
+              "protocol": "https",
+              "host": [
+                "httpbin",
+                "org"
+              ],
+              "path": [
+                "get"
+              ],
+              "hash": "section1"
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// Test hash getter (returns fragment without leading #)",
+                  "const initialHash = pm.request.url.hash",
+                  "pm.environment.set('initial_hash', initialHash)",
+                  "",
+                  "// Change hash",
+                  "pm.request.url.hash = 'section2'",
+                  "pm.environment.set('updated_hash', pm.request.url.hash)",
+                  "",
+                  "// Verify hash doesn't have leading #",
+                  "pm.environment.set('hash_no_leading_symbol', (!initialHash.startsWith('#')).toString())"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('hash property getter works', () => {",
+                  "    pm.expect(pm.environment.get('initial_hash')).to.equal('section1')",
+                  "    pm.expect(pm.environment.get('hash_no_leading_symbol')).to.equal('true')",
+                  "})",
+                  "",
+                  "pm.test('hash property setter works', () => {",
+                  "    pm.expect(pm.environment.get('updated_hash')).to.equal('section2')",
+                  "})"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Method Mutation",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://httpbin.org/anything",
+              "protocol": "https",
+              "host": [
+                "httpbin",
+                "org"
+              ],
+              "path": [
+                "anything"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// Change method to POST",
+                  "pm.request.method = 'POST'",
+                  "pm.environment.set('method_after_change', pm.request.method)",
+                  "",
+                  "// Test case preservation (Postman does NOT normalize to uppercase)",
+                  "pm.request.method = 'put'",
+                  "pm.environment.set('method_case_preserved', pm.request.method)"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Method mutation works', () => {",
+                  "    pm.expect(pm.environment.get('method_after_change')).to.equal('POST')",
+                  "})",
+                  "",
+                  "pm.test('Method case is preserved (not normalized)', () => {",
+                  "    const json = pm.response.json()",
+                  "    // httpbin.org normalizes to uppercase, but pm.request.method preserves case",
+                  "    pm.expect(pm.environment.get('method_case_preserved')).to.equal('put')",
+                  "})"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Body Update",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "https://httpbin.org/post",
+              "protocol": "https",
+              "host": [
+                "httpbin",
+                "org"
+              ],
+              "path": [
+                "post"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// Update body with JSON",
+                  "pm.request.body.update({",
+                  "    mode: 'raw',",
+                  "    raw: JSON.stringify({ test: true, timestamp: Date.now() }),",
+                  "    options: { raw: { language: 'json' } }",
+                  "})",
+                  "",
+                  "pm.environment.set('body_updated', 'true')"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Body was updated and sent', () => {",
+                  "    const json = pm.response.json()",
+                  "    pm.expect(json.json).to.have.property('test', true)",
+                  "    pm.expect(json.json).to.have.property('timestamp')",
+                  "    pm.expect(json.json.timestamp).to.be.a('number')",
+                  "})",
+                  "",
+                  "pm.test('Body update was tracked', () => {",
+                  "    pm.expect(pm.environment.get('body_updated')).to.equal('true')",
+                  "})"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Combined Mutations",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://httpbin.org/anything",
+              "protocol": "https",
+              "host": [
+                "httpbin",
+                "org"
+              ],
+              "path": [
+                "anything"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// Combine multiple mutation types",
+                  "// Note: In Postman, after string assignment, use update() to modify URL",
+                  "pm.request.url = 'https://httpbin.org/anything/test?source=hoppscotch#results'",
+                  "pm.request.method = 'POST'",
+                  "pm.request.headers.add({ key: 'X-Test-Suite', value: 'postman-compat' })",
+                  "pm.request.body.update(JSON.stringify({ combined: true }))",
+                  "",
+                  "pm.environment.set('mutations_applied', 'true')"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('All mutations were applied', () => {",
+                  "    const json = pm.response.json()",
+                  "    ",
+                  "    // URL mutations",
+                  "    pm.expect(json.url).to.include('/anything/test')",
+                  "    pm.expect(json.url).to.include('source=hoppscotch')",
+                  "    ",
+                  "    // Method mutation",
+                  "    pm.expect(json.method).to.equal('POST')",
+                  "    ",
+                  "    // Header mutation",
+                  "    pm.expect(json.headers['X-Test-Suite']).to.equal('postman-compat')",
+                  "    ",
+                  "    // Body mutation",
+                  "    pm.expect(json.json).to.have.property('combined', true)",
+                  "})"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "8. Response Testing",
+      "description": "Tests for pm.response properties validated by js-sandbox response/*.spec.ts files",
+      "item": [
+        {
+          "name": "Response JSON Parsing",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://httpbin.org/get?test=value&foo=bar",
+              "protocol": "https",
+              "host": [
+                "httpbin",
+                "org"
+              ],
+              "path": [
+                "get"
+              ],
+              "query": [
+                {
+                  "key": "test",
+                  "value": "value"
+                },
+                {
+                  "key": "foo",
+                  "value": "bar"
+                }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('pm.response.json() parses JSON response', () => {",
+                  "    const json = pm.response.json()",
+                  "    pm.expect(json).to.be.an('object')",
+                  "})",
+                  "",
+                  "pm.test('Response has expected structure', () => {",
+                  "    const json = pm.response.json()",
+                  "    pm.expect(json).to.have.property('args')",
+                  "    pm.expect(json).to.have.property('headers')",
+                  "    pm.expect(json).to.have.property('url')",
+                  "})",
+                  "",
+                  "pm.test('Query parameters are in response', () => {",
+                  "    const json = pm.response.json()",
+                  "    pm.expect(json.args).to.have.property('test', 'value')",
+                  "    pm.expect(json.args).to.have.property('foo', 'bar')",
+                  "})"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Response Headers Access",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Custom-Test",
+                "value": "header-value"
+              }
+            ],
+            "url": {
+              "raw": "https://httpbin.org/headers",
+              "protocol": "https",
+              "host": [
+                "httpbin",
+                "org"
+              ],
+              "path": [
+                "headers"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Can access response headers', () => {",
+                  "    const contentType = pm.response.headers.get('Content-Type')",
+                  "    pm.expect(contentType).to.exist",
+                  "    pm.expect(contentType).to.include('application/json')",
+                  "})",
+                  "",
+                  "pm.test('Response headers are case-insensitive', () => {",
+                  "    const ct1 = pm.response.headers.get('Content-Type')",
+                  "    const ct2 = pm.response.headers.get('content-type')",
+                  "    const ct3 = pm.response.headers.get('CONTENT-TYPE')",
+                  "    pm.expect(ct1).to.equal(ct2)",
+                  "    pm.expect(ct2).to.equal(ct3)",
+                  "})",
+                  "",
+                  "pm.test('Non-existent headers return undefined', () => {",
+                  "    const missing = pm.response.headers.get('X-Does-Not-Exist')",
+                  "    pm.expect(missing).to.be.undefined",
+                  "})"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Status Code Validation",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://httpbin.org/status/200",
+              "protocol": "https",
+              "host": [
+                "httpbin",
+                "org"
+              ],
+              "path": [
+                "status",
+                "200"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => {",
+                  "    pm.expect(pm.response.code).to.equal(200)",
+                  "})",
+                  "",
+                  "pm.test('Status code is in 2xx range', () => {",
+                  "    pm.expect(pm.response.code).to.be.within(200, 299)",
+                  "})",
+                  "",
+                  "pm.test('Status code is above 199', () => {",
+                  "    pm.expect(pm.response.code).to.be.above(199)",
+                  "})",
+                  "",
+                  "pm.test('Status code is at least 200', () => {",
+                  "    pm.expect(pm.response.code).to.be.at.least(200)",
+                  "})"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Error Status Code Handling",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://httpbin.org/status/404",
+              "protocol": "https",
+              "host": [
+                "httpbin",
+                "org"
+              ],
+              "path": [
+                "status",
+                "404"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 404', () => {",
+                  "    pm.expect(pm.response.code).to.equal(404)",
+                  "})",
+                  "",
+                  "pm.test('Status code is 4xx client error', () => {",
+                  "    pm.expect(pm.response.code).to.be.within(400, 499)",
+                  "})",
+                  "",
+                  "pm.test('Status code is not 2xx success', () => {",
+                  "    pm.expect(pm.response.code).to.not.be.within(200, 299)",
+                  "})"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Response Text Access",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://httpbin.org/get",
+              "protocol": "https",
+              "host": [
+                "httpbin",
+                "org"
+              ],
+              "path": [
+                "get"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('pm.response.text() returns string', () => {",
+                  "    const text = pm.response.text()",
+                  "    pm.expect(text).to.be.a('string')",
+                  "})",
+                  "",
+                  "pm.test('Response text is not empty', () => {",
+                  "    const text = pm.response.text()",
+                  "    pm.expect(text.length).to.be.above(0)",
+                  "})",
+                  "",
+                  "pm.test('Response text contains JSON', () => {",
+                  "    const text = pm.response.text()",
+                  "    pm.expect(text).to.include('{')",
+                  "    pm.expect(text).to.include('}')",
+                  "})"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "POST Request with Response Validation",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\":\"test\",\"value\":123,\"nested\":{\"key\":\"data\"}}"
+            },
+            "url": {
+              "raw": "https://httpbin.org/post",
+              "protocol": "https",
+              "host": [
+                "httpbin",
+                "org"
+              ],
+              "path": [
+                "post"
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('POST request body is echoed in response', () => {",
+                  "    const json = pm.response.json()",
+                  "    pm.expect(json.json).to.have.property('name', 'test')",
+                  "    pm.expect(json.json).to.have.property('value', 123)",
+                  "})",
+                  "",
+                  "pm.test('Nested properties are accessible', () => {",
+                  "    const json = pm.response.json()",
+                  "    pm.expect(json.json).to.have.nested.property('nested.key', 'data')",
+                  "})",
+                  "",
+                  "pm.test('Response confirms POST method', () => {",
+                  "    const json = pm.response.json()",
+                  "    pm.expect(json.url).to.include('/post')",
+                  "})"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -15,6 +15,7 @@ type BaseInputsConfig = {
   envs: TestResult["envs"]
   request: HoppRESTRequest
   cookies: Cookie[] | null
+  getUpdatedRequest?: () => HoppRESTRequest
 }
 
 /**
@@ -35,7 +36,11 @@ export const createBaseInputs = (
   )
 
   // Get request properties - shared across pre and post request contexts
-  const requestProps = getSharedRequestProps(config.request)
+  // For pre-request, use the updater function to read from mutated request
+  const requestProps = getSharedRequestProps(
+    config.request,
+    config.getUpdatedRequest
+  )
 
   // Cookie accessors
   const cookieProps = {
@@ -63,6 +68,16 @@ export const createBaseInputs = (
     }),
   }
 
+  // Environment accessors for toObject() support
+  const envAccessors = {
+    getAllSelectedEnvs: defineSandboxFn(ctx, "getAllSelectedEnvs", () => {
+      return updatedEnvs.selected || []
+    }),
+    getAllGlobalEnvs: defineSandboxFn(ctx, "getAllGlobalEnvs", () => {
+      return updatedEnvs.global || []
+    }),
+  }
+
   // Combine all namespace methods
   const pwMethods = createPwNamespaceMethods(ctx, envMethods, requestProps)
   const hoppMethods = createHoppNamespaceMethods(ctx, envMethods, requestProps)
@@ -73,6 +88,7 @@ export const createBaseInputs = (
     ...hoppMethods,
     ...pmMethods,
     ...cookieProps,
+    ...envAccessors,
     // Expose the updated state accessors
     getUpdatedEnvs: () => updatedEnvs,
     getUpdatedCookies,

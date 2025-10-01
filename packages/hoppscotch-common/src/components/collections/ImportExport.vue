@@ -16,6 +16,7 @@ import { PropType, Ref, computed, ref } from "vue"
 
 import { FileSource } from "~/helpers/import-export/import/import-sources/FileSource"
 import { UrlSource } from "~/helpers/import-export/import/import-sources/UrlSource"
+import { PostmanFileSource } from "~/helpers/import-export/import/import-sources/PostmanFileSource"
 
 import IconFile from "~icons/lucide/file"
 
@@ -179,19 +180,26 @@ const isTeamWorkspace = computed(() => {
 const currentImportSummary: Ref<{
   showImportSummary: boolean
   importedCollections: HoppCollection[] | null
+  scriptsImported?: boolean
 }> = ref({
   showImportSummary: false,
   importedCollections: null,
+  scriptsImported: false,
 })
 
-const setCurrentImportSummary = (collections: HoppCollection[]) => {
+const setCurrentImportSummary = (
+  collections: HoppCollection[],
+  scriptsImported = false
+) => {
   currentImportSummary.value.importedCollections = collections
   currentImportSummary.value.showImportSummary = true
+  currentImportSummary.value.scriptsImported = scriptsImported
 }
 
 const unsetCurrentImportSummary = () => {
   currentImportSummary.value.importedCollections = null
   currentImportSummary.value.showImportSummary = false
+  currentImportSummary.value.scriptsImported = false
 }
 
 const HoppRESTImporter: ImporterOrExporter = {
@@ -375,19 +383,19 @@ const HoppPostmanImporter: ImporterOrExporter = {
     format: "postman",
   },
   importSummary: currentImportSummary,
-  component: FileSource({
+  component: PostmanFileSource({
     caption: "import.from_file",
     acceptedFileTypes: ".json",
     description: "import.from_postman_import_summary",
-    onImportFromFile: async (content) => {
+    onImportFromFile: async (content, importScripts) => {
       isPostmanImporterInProgress.value = true
 
-      const res = await hoppPostmanImporter(content)()
+      const res = await hoppPostmanImporter(content, importScripts)()
 
       if (E.isRight(res)) {
         await handleImportToStore(res.right)
 
-        setCurrentImportSummary(res.right)
+        setCurrentImportSummary(res.right, importScripts)
 
         platform.analytics?.logEvent({
           platform: "rest",
