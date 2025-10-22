@@ -212,6 +212,19 @@
                     "
                   />
                   <HoppSmartItem
+                    v-if="!hasNoTeamAccess"
+                    ref="documentationAction"
+                    :icon="IconBook"
+                    :label="t('documentation.title')"
+                    :shortcut="['D']"
+                    @click="
+                      () => {
+                        emit('open-documentation')
+                        hide()
+                      }
+                    "
+                  />
+                  <HoppSmartItem
                     ref="propertiesAction"
                     :icon="IconSettings2"
                     :label="t('action.properties')"
@@ -285,6 +298,7 @@ import IconPlaySquare from "~icons/lucide/play-square"
 import IconSettings2 from "~icons/lucide/settings-2"
 import IconTrash2 from "~icons/lucide/trash-2"
 import IconArrowUpDown from "~icons/lucide/arrow-up-down"
+import IconBook from "~icons/lucide/book"
 import { CurrentSortValuesService } from "~/services/current-sort.service"
 import { useService } from "dioc/vue"
 
@@ -337,6 +351,7 @@ const emit = defineEmits<{
   (event: "edit-collection"): void
   (event: "edit-properties"): void
   (event: "duplicate-collection"): void
+  (event: "open-documentation"): void
   (event: "export-data"): void
   (event: "remove-collection"): void
   (event: "drop-event", payload: DataTransfer): void
@@ -366,6 +381,7 @@ const options = ref<TippyComponent | null>(null)
 const propertiesAction = ref<HTMLButtonElement | null>(null)
 const runCollectionAction = ref<HTMLButtonElement | null>(null)
 const sortAction = ref<HTMLButtonElement | null>(null)
+const documentationAction = ref<HTMLButtonElement | null>(null)
 
 const dragging = ref(false)
 const ordering = ref(false)
