@@ -14,6 +14,10 @@ import {
   HoppRESTRequestResponses,
   makeHoppRESTResponseOriginalRequest,
   HoppCollectionVariable,
+  getDefaultCollectionDocumentation,
+  CollectionDocumentation,
+  getDefaultRequestDocumentation,
+  RequestDocumentation,
 } from "@hoppscotch/data"
 import * as A from "fp-ts/Array"
 import { flow, pipe } from "fp-ts/function"
@@ -456,6 +460,48 @@ const getHoppReqURL = (url: Item["request"]["url"] | null): string => {
   )
 }
 
+const getDocumentationCollectionDescription = (
+  docField?: string | DescriptionDefinition
+): CollectionDocumentation => {
+  if (!docField) {
+    return getDefaultCollectionDocumentation()
+  }
+
+  let description = ""
+
+  if (typeof docField === "string") {
+    description = docField
+  } else if (typeof docField === "object" && "content" in docField) {
+    description = docField.content || ""
+  }
+
+  return {
+    ...getDefaultCollectionDocumentation(),
+    content: description,
+  }
+}
+
+const getDocumentationRequestDescription = (
+  docField?: string | DescriptionDefinition
+): RequestDocumentation => {
+  if (!docField) {
+    return getDefaultRequestDocumentation()
+  }
+
+  let description = ""
+
+  if (typeof docField === "string") {
+    description = docField
+  } else if (typeof docField === "object" && "content" in docField) {
+    description = docField.content || ""
+  }
+
+  return {
+    ...getDefaultRequestDocumentation(),
+    content: description,
+  }
+}
+
 const getHoppRequest = (item: Item): HoppRESTRequest => {
   return makeRESTRequest({
     name: item.name,
@@ -470,6 +516,7 @@ const getHoppRequest = (item: Item): HoppRESTRequest => {
     }),
     requestVariables: getHoppReqVariables(item.request.url.variables),
     responses: getHoppResponses(item.responses),
+    documentation: getDocumentationRequestDescription(item.request.description),
 
     // TODO: Decide about this
     preRequestScript: "",
@@ -489,6 +536,7 @@ const getHoppFolder = (ig: ItemGroup<Item>): HoppCollection =>
     auth: getHoppReqAuth(ig.auth),
     headers: [],
     variables: getHoppCollVariables(ig),
+    documentation: getDocumentationCollectionDescription(ig.description),
   })
 
 export const getHoppCollections = (collections: PMCollection[]) => {
